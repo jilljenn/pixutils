@@ -1,6 +1,6 @@
 import numpy as np
 from sklearn.cluster import dbscan
-from utils.stats import display_cluster
+from pixutils.stats import display_cluster
 from leven import levenshtein
 
 
