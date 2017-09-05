@@ -18,7 +18,7 @@ for competence in sorted(knowledge):
     print('#', competence, titles[competence])
     for level in sorted(knowledge[competence]):
         nb_skills = len(knowledge[competence][level])
-        print('Level {} : 5 pix pour {} acquix donc {:.2f} pix par skill, ex. {}'.format(level, nb_skills, 5 / nb_skills, sorted(list(knowledge[competence][level]))[:5]))
+        print('Level {} : 8 pix pour {} acquix donc {:.2f} pix par skill, ex. {}'.format(level, nb_skills, 8 / nb_skills, sorted(list(knowledge[competence][level]))[:5]))
 
 for competence_id, challenge_id in comp_chall:
     challengesOfCompetence[competence_id].add(challenge_id)
@@ -41,6 +41,7 @@ keys = {
     '5.2': ('recudHE5Omrr10qrx', 'recfLYUy8fYlcyAsl'), # 5.2
 }
 
-for competence in ['5.1', '5.2', '1.1', '1.2', '1.3', '3.1', '3.2', '3.3', '3.4']:
+'''for competence in ['4.1']:
     competence_id, course_id = keys[competence]
     update_challenges(course_id, challengesOfCompetence[competence_id])
+'''
