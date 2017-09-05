@@ -1,5 +1,6 @@
 from pixutils.airtable import make_request, lookup_challenges, update_challenges
 from collections import Counter, defaultdict
+import json
 
 competences = {}
 titles = {}
@@ -27,6 +28,7 @@ for competence_id in challengesOfCompetence:
     print(competence_id, list(challengesOfCompetence[competence_id])[:5])
 
 keys = {
+    # competence: (competence_id, course_id)
     '1.1': ('recsvLz0W2ShyfD63', 'recNPB7dTNt5krlMA'),
     '1.2': ('recIkYm646lrGvLNT', 'recAY0W7xurA11OLZ'),
     '1.3': ('recNv8qhaY887jQb2', 'recR9yCEqgedB0LYQ'),
@@ -41,7 +43,22 @@ keys = {
     '5.2': ('recudHE5Omrr10qrx', 'recfLYUy8fYlcyAsl'), # 5.2
 }
 
-'''for competence in ['4.1']:
+first_challenge = {}
+
+courses = make_request('/Tests?view=Tests de positionnement', {'fields': ['Nom', 'Épreuves']})
+print(json.dumps(courses, indent=4))
+for course in courses['records']:
+    # print(course['fields'])
+    first_challenge[course['id']] = course['fields']['Épreuves'][-1]
+    print('Test', course['fields']['Nom'], len(course['fields']['Épreuves']), 'épreuves')
+    print('Premier challenge', first_challenge[course['id']])
+    print()
+
+for competence in keys:
     competence_id, course_id = keys[competence]
-    update_challenges(course_id, challengesOfCompetence[competence_id])
-'''
+    challenges = challengesOfCompetence[competence_id]
+    print('Test', competence, len(challenges), 'épreuves')
+    challenges.remove(first_challenge[course_id])
+    challenges = [first_challenge[course_id]] + list(challenges)
+    print(len(challenges), 'épreuves dont', challenges[0])
+    update_challenges(course_id, challenges)

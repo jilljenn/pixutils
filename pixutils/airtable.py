@@ -52,7 +52,6 @@ def lookup_challenges(query, offset=None):
     return sorted(acquix), comp_chall
 
 def update_challenges(adaptive_course_id, challenge_ids):
-    new_test = {'fields': {'Épreuves': list(challenge_ids)[::-1]}}
+    new_test = {'fields': {'Épreuves': challenge_ids[::-1]}}
     r = requests.patch('https://api.airtable.com/v0/{}/Tests/%s'.format(AIRTABLE_BASE) % adaptive_course_id, headers={
         'Authorization': 'Bearer {}'.format(AIRTABLE_API_KEY), 'Content-type': 'application/json'}, data=json.dumps(new_test))
-    print(r.json())
